@@ -1,0 +1,42 @@
+{
+  "name": "@justrandompkg/hooks",
+  "version": "1.0.0",
+  "description": "Shared lite hooks",
+  "main": "dist/index.js",
+  "browser": "dist/index.js",
+  "homepage": "https://github.com/harunrzl/justrandompkg/packages/hooks",
+  "author": "harunrzl",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harunrzl/justrandompkg.git"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "!__tests__"
+  ],
+  "scripts": {
+    "test": "jest",
+    "tc": "tsc --noEmit",
+    "lint:staged": "lint-staged -c lint-staged.config.js",
+    "lint": "pnpm run lint:staged && pnpm run tc",
+    "babel:build": "babel src -d dist --extensions '.js,.jsx,.ts,.tsx' --ignore '**/__tests__/**' --verbose",
+    "dev": "babel -w src -d dist --extensions '.js,.jsx,.ts,.tsx' --ignore '**/*.(test).(j|t)sx?' --verbose --source-maps",
+    "build-package": "pnpm run babel:build && tsc --emitDeclarationOnly",
+    "build": "rm -rf dist && pnpm run build-package",
+    "prepublishOnly": "pnpm run build && pnpm run tc && pnpm run test"
+  },
+  "peerDependencies": {
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
+    "typescript": "^4.0.0"
+  }
+}
