@@ -1,6 +1,6 @@
 {
   "name": "@justrandompkg/hooks",
-  "version": "1.0.2 ",
+  "version": "1.0.2",
   "description": "Shared lite hooks",
   "main": "dist/index.js",
   "browser": "dist/index.js",
