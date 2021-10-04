@@ -74,7 +74,7 @@ const useFetch = (url: string, opts?: OptionPropsInterface) => {
   const { ssrFetched, onBeforeFetchDefault, onAfterFetchDefault } = contextState || {};
 
   const hasFetched = useRef(false);
-  const [state, setState] = useState(getInitialState({ ssrFetched, url, ...opts }));
+  const [state, setState] = useState<ReturnedDataType>(getInitialState({ ssrFetched, url, ...opts }));
 
   const prevUrl = usePrevious(url);
   const prevVariables = usePrevious(opts?.variables);
