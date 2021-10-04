@@ -1,10 +1,11 @@
 import { useContext, useState } from 'react';
-import isEmpty from 'lodash/isEmpty';
+import isEmpty from './utils/isEmpty';
 
 import { FetchContext } from './context';
 import fetcher from './helpers/fetcher';
 
 import { FetcherProps, OptionPropsInterface } from './interface';
+import { ReturnedDataType } from './types';
 
 /**
  * @function useFetchMutation useFetch for mutation
@@ -54,11 +55,11 @@ const defaultMutationState = {
 const useFetchMutation = (url: string, opts?: OptionPropsInterface) => {
   const [contextState] = useContext(FetchContext);
   const { onBeforeFetchDefault, onAfterFetchDefault } = contextState || {};
-  const [state, setState] = useState({ ...defaultMutationState });
+  const [state, setState] = useState<ReturnedDataType>({ ...defaultMutationState });
 
   const refetch = async (newFetcherProps: FetcherProps = {}) => {
     // set called & loading state first
-    setState(currentState => ({ ...currentState, called: true, loading: true }));
+    setState((currentState: ReturnedDataType) => ({ ...currentState, called: true, loading: true }));
 
     const { onCompleted, onError, ...fetcherProps } = opts || {};
     const returnedData = await fetcher(
@@ -71,7 +72,7 @@ const useFetchMutation = (url: string, opts?: OptionPropsInterface) => {
     );
 
     // set state with returned data
-    setState(currentState => ({ ...currentState, ...returnedData, loading: false }));
+    setState((currentState: ReturnedDataType) => ({ ...currentState, ...returnedData, loading: false }));
 
     // callback after fetch completed
     if (returnedData.error && typeof onError === 'function') onError(returnedData.error);

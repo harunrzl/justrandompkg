@@ -9,13 +9,15 @@ const doFetch = async (url: string, opts: any) => {
     returnedData.headers = res.headers;
     returnedData.status = res.status;
     returnedData.data = await res[responseType]();
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(err);
-    returnedData.error = {
-      name: err.name,
-      message: err.message,
-      stack: err.stack,
-    };
+    if (err instanceof Error) {
+      returnedData.error = {
+        name: err.name,
+        message: err.message,
+        stack: err.stack,
+      };
+    }
   }
 
   return returnedData;
